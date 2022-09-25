@@ -25,6 +25,7 @@ function formatDate(timestamp) {
 
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
+  celsiusTemp = response.data.main.temp;
   temperatureElement.innerHTML = Math.round(celsiusTemp);
 
   let cityElement = document.querySelector("#city");
@@ -48,8 +49,6 @@ function displayTemperature(response) {
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
-
-  celsiusTemp = response.data.main.temp;
 }
 
 function search(city) {
@@ -64,7 +63,6 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
-
 function displayFahrenheitTemp(event) {
   event.preventDefault();
   celsiusLink.classList.remove("active");
@@ -73,7 +71,6 @@ function displayFahrenheitTemp(event) {
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(fahrenheitTemp);
 }
-
 
 function displayCelsiusTemp(event) {
   event.preventDefault();
