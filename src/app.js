@@ -23,6 +23,39 @@ function formatDate(timestamp) {
   return `${day} ${hours}:${minutes}`;
 }
 
+///Forecast
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+  let forecastHTML = `<div class="row">`;
+
+  days.forEach(function (day) {
+     forecastHTML = forecastHTML +
+       `
+            <div class="col-2">
+              <div class="weather-forecast-date">${day}</div>
+              <img src="https://ssl.gstatic.com/onebox/weather/48/rain_light.png" alt="" 
+              width="42" /> 
+              <br>
+              <div class="weather-forecast-temp">
+              <span class="weather-forecast-temp-max">
+                17° 
+              </span>| 
+              <span class="weather-forecast-temp-min">
+              12°
+              </span>
+              </div>
+            </div>
+            `;
+  })
+ 
+  forecastHTML = forecastHTML +`</div>`;
+  forecastElement.innerHTML = forecastHTML;
+  console.log(forecastHTML);
+}
+
+///TEMPERATURE
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   celsiusTemp = response.data.main.temp;
@@ -50,19 +83,25 @@ function displayTemperature(response) {
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
 }
+///
 
+///API
 function search(city) {
   let apiKey = "ec78611d825d9f65f95eedc0e996f06f";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayTemperature);
 }
+///
 
+/// Submit
 function handleSubmit(event) {
   event.preventDefault();
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
 }
+///
 
+///Units Temp///
 function displayFahrenheitTemp(event) {
   event.preventDefault();
   celsiusLink.classList.remove("active");
@@ -81,6 +120,7 @@ function displayCelsiusTemp(event) {
 }
 
 let celsiusTemp = null;
+////
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
@@ -92,3 +132,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemp);
 
 search("Kyiv");
+displayForecast();
