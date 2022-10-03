@@ -48,7 +48,7 @@ function displayForecast(response) {
           forecastDay.dt)}</div>
               <img src="https://openweathermap.org/img/wn/${forecastDay.weather[0].icon
         }@2x.png" alt="" 
-              width="42" /> 
+              width="50" /> 
               <br>
               <div class="weather-forecast-temp">
               <span class="weather-forecast-temp-max">
@@ -108,6 +108,7 @@ function displayTemperature(response) {
 }
 ///
 
+
 ///API
 function search(city) {
   let apiKey = "a43564c91a6c605aeb564c9ed02e3858";
@@ -144,6 +145,23 @@ function displayCelsiusTemp(event) {
 
 let celsiusTemp = null;
 ////
+
+///// CURRENT LOCATION
+function getCurrentLocation(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(searchLocation);
+}
+
+function searchLocation(position) {
+  let apiKey = "ec78611d825d9f65f95eedc0e996f06f";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+let currentLocationButton = document
+  .querySelector("#current-location-button")
+  .addEventListener("click", getCurrentLocation);
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
